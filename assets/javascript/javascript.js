@@ -64,7 +64,18 @@ var config = {
   };
   firebase.initializeApp(config);
 
-  console.log(firebase);
+var database = firebase.database();
+
+
+var ref = database.ref('scores');
+console.log(ref);
+var data = {
+
+    name: "Jason",
+    score: 150
+}
+
+ref.push(data);
 
 var users = [];
 
