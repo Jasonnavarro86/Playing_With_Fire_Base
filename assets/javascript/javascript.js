@@ -20,3 +20,18 @@ var newObjSyn = '[{"firstname" : "jason", "lastname":"navarro"}, {"firstname" : 
 var test1 = JSON.parse(newObjSyn);
 console.log(test1[0].firstname);
 console.log(test1[1].firstname);
+
+var objTest2 = {
+
+    "test":"hello",
+    "love":{"truth":"Jesus"}
+}
+
+var objTest3 = {
+    
+        test:"hello",
+        love:{truth:"Jesus"}
+    }
+
+console.log(objTest2.love.truth);
+console.log(objTest3.love.truth);
