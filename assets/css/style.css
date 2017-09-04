@@ -76,4 +76,17 @@ img {
     font-family: 'Anton', sans-serif;
 }
 
+.highScores{
+    background-color: #000000;
+    color: white;
+    font-size: 30px;
+    font-family: 'Indie Flower', cursive;
+    text-align: center;
+    max-width: 250px;
+    float: right;
+    margin-top: 15px;
+    margin-left: 45px;
+
+}
+
 

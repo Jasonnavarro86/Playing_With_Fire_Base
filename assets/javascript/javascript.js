@@ -77,6 +77,7 @@ var timer1;
 function createPage() {
 // These vars take my Ans1 object properties and stores them in an array (var storeQs) that allows me to access the answers.
 $(".start").hide()
+$(".highScores").hide()
 var storeQs = Object.keys(questions[pageNum].Ans1)
 var divQ1 = storeQs[0];
 var divQ2 = storeQs[1];
@@ -208,9 +209,12 @@ if (pageNum == 0) {
 // START: Here I call my start / restart button at the start and end of game.
 function startButton() {
 $("<button>").addClass("start btn btn lg btn-danger").html("AVENGERS TRIVIA GAME! <br> " + " click to start.").appendTo("body")
+
 var storeName = prompt("Enter your name to save your score!");
+
 localStorage.clear();
 localStorage.setItem("PlayerName", storeName);
+
 $(".start").on("click", function () {
     wrongAns = 0;
     rightAns = 0;
@@ -221,7 +225,7 @@ $(".start").on("click", function () {
 })
 }
 startButton();
-
+// Config for firebase. 
 var config = {
     apiKey: "AIzaSyAFiVblE0vGH4K9ttdMdI3rIngiFitdY4M",
     authDomain: "my-first-firebase-project-86.firebaseapp.com",
@@ -231,26 +235,49 @@ var config = {
     messagingSenderId: "295406057207"
   };
   firebase.initializeApp(config);
-
-
-
-
+// This function stores the user name and score of each player in firebase.
 function localAndFireBase(){
 
     var database = firebase.database();
     
     var ref = database.ref('scores');
+
     var data = {
 
     name: localStorage.PlayerName,
     right: localStorage.rightAnswer,
     wrong: localStorage.wrongAnswer
+}
+ref.push(data);
+
+}
+// This section is where I call the data from firebase and put it into the html.
+var database1 = firebase.database();
+var ref1 = database1.ref('scores');
+ref1.on('value', gotData, errData);
+
+function gotData(data){
+var scores1 = data.val();
+var obj1 = Object.keys(scores1);
+
+$("<h1>").addClass("highScores").html("High Scores:").prependTo("body")
+for (var i = 0; i < obj1.length; i++) {
+var obj2 = obj1[i];
+
+var pName = scores1[obj2].name;
+var rAns = scores1[obj2].right;
+var wAns = scores1[obj2].wrong;
+
+$("<p>").html("Name: " + pName).appendTo(".highScores");
+$("<p>").html("Right: " + rAns).appendTo(".highScores");
+$("<p>").html("Wrong: " + wAns).appendTo(".highScores");
+}
 
 }
 
-ref.push(data);
-
-
+function errData(err){
+   console.log("Error!"); 
+   console.log(err);
 }
 
 
